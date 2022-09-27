@@ -2,6 +2,7 @@ package com.hagakure.fundamentos.configuration;
 
 import com.hagakure.fundamentos.bean.MyBean;
 import com.hagakure.fundamentos.bean.MyBeanImplement;
+import com.hagakure.fundamentos.bean.MyBeanTwoImplement;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -10,6 +11,6 @@ import org.springframework.context.annotation.Configuration;
 public class MyConfigurationBean {
     @Bean
     public MyBean beanOperation(){
-        return new MyBeanImplement();
+        return new MyBeanTwoImplement(); //No se  invoca al Qualifier
     }
 }
