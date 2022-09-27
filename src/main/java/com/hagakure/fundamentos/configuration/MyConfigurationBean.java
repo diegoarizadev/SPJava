@@ -16,4 +16,9 @@ public class MyConfigurationBean {
     public MyOperation beanOperationSum(){
         return new MyOperationImplement(); //No se  invoca al Qualifier
     }
+
+    @Bean
+    public MyBeanWithDependency beanOperationSumWhitDependency(MyOperation operation){
+        return new MyBeanWithDependencyImplement(operation);
+    }
 }
