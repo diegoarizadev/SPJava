@@ -2,11 +2,14 @@ package com.hagakure.fundamentos.configuration;
 
 import com.hagakure.fundamentos.bean.MyBeanWhitProperties;
 import com.hagakure.fundamentos.bean.MyBeanWhitPropertiesImplementation;
+import com.hagakure.fundamentos.pojo.UserPojo;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@EnableConfigurationProperties(UserPojo.class) //Se va a representar la clase UserPojo como una propiedad(es)
 public class GeneralConfiguration  {
 
     //Mapeo de variables.

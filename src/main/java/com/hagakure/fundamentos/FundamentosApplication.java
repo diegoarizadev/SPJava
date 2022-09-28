@@ -5,6 +5,7 @@ import com.hagakure.fundamentos.bean.MyBeanWhitProperties;
 import com.hagakure.fundamentos.bean.MyBeanWithDependency;
 import com.hagakure.fundamentos.bean.MyBeanWithDependencyImplement;
 import com.hagakure.fundamentos.component.ComponentDependecy;
+import com.hagakure.fundamentos.pojo.UserPojo;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -17,12 +18,13 @@ public class FundamentosApplication implements CommandLineRunner {
 	private ComponentDependecy componentDependecy;
 	private MyBean myBean;
 	private MyBeanWhitProperties myBeanWhitProperties;
-
-	public FundamentosApplication(@Qualifier("componentTwoImplement") ComponentDependecy componentDependecy, MyBean bean, MyBeanWithDependency beanWhitDependency, MyBeanWhitProperties beanProperties){
+	private UserPojo userPojo;
+	public FundamentosApplication(@Qualifier("componentTwoImplement") ComponentDependecy componentDependecy, MyBean bean, MyBeanWithDependency beanWhitDependency, MyBeanWhitProperties beanProperties, UserPojo pojo){
 		this.componentDependecy = componentDependecy;
 		this.myBean = bean;
 		this.myBeanWithDependencyImplement = beanWhitDependency;
 		this.myBeanWhitProperties = beanProperties;
+		this.userPojo = pojo;
 	}
 	public static void main(String[] args) {
 		SpringApplication.run(FundamentosApplication.class, args);
@@ -34,5 +36,6 @@ public class FundamentosApplication implements CommandLineRunner {
 		myBean.print();
 		myBeanWithDependencyImplement.printWithDependency();
 		System.out.println(myBeanWhitProperties.function());
+		System.out.println(userPojo.getEmail() + " -- " + userPojo.getEdad());
 	}
 }
