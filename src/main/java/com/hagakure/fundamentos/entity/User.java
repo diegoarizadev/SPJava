@@ -31,6 +31,9 @@ public class User {
         this.id = id;
     }
 
+    public User() {
+    }
+
     public User(String name, String email, LocalDate birthDate) {
         this.name = name;
         this.email = email;

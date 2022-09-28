@@ -3,7 +3,6 @@ package com.hagakure.fundamentos;
 import com.hagakure.fundamentos.bean.MyBean;
 import com.hagakure.fundamentos.bean.MyBeanWhitProperties;
 import com.hagakure.fundamentos.bean.MyBeanWithDependency;
-import com.hagakure.fundamentos.bean.MyBeanWithDependencyImplement;
 import com.hagakure.fundamentos.component.ComponentDependecy;
 import com.hagakure.fundamentos.entity.User;
 import com.hagakure.fundamentos.pojo.UserPojo;
@@ -14,6 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.domain.Sort;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -46,6 +46,7 @@ public class FundamentosApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		//examplesOld();
 		saveUsersInDataBase();
+		getInformationJPQLFromUser();
 	}
 
 	private void examplesOld(){
@@ -73,5 +74,24 @@ public class FundamentosApplication implements CommandLineRunner {
 		List<User> list = Arrays.asList(a1,b2, c3,user3,user4,user5,user6,user7,user8,user9);
 		//Implementación del repositorio para persistir.
 		list.stream().forEach(repository::save); //Se almacenaran todos los registros.
+	}
+
+
+	private void getInformationJPQLFromUser(){
+		LOGGER.info("---> Begin getInformationJPQLFromUser");
+		LOGGER.info("---> getInformationJPQLFromUser Usuario Existente");
+		LOGGER.info("Select USER --> "+repository.findByUserEmail("ryz3n@gmail.com").orElseThrow(()-> new RuntimeException("Error : Usuario no encontrado")));
+		LOGGER.info("---> getInformationJPQLFromUser El Usuario NO Existente");
+		LOGGER.info("Select USER --> "+repository.findByUserEmail("ryz3n@gmail.com").orElseThrow(()-> new RuntimeException(" -->> Error : Usuario no encontrado")));
+		LOGGER.info("---> getInformationJPQLFromUser ORDENAMIENTO");
+
+		LOGGER.info("Select USER --> ");
+
+		repository.findAndSort("Gw3", Sort.by("id").descending()).stream().forEach(user -> LOGGER.info("----> USUARIO : " + user));
+
+		LOGGER.info("---> END getInformationJPQLFromUser");
+
+
+
 	}
 }
