@@ -5,8 +5,11 @@ import com.hagakure.fundamentos.bean.MyBeanWhitPropertiesImplementation;
 import com.hagakure.fundamentos.pojo.UserPojo;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableConfigurationProperties(UserPojo.class) //Se va a representar la clase UserPojo como una propiedad(es)
@@ -25,5 +28,19 @@ public class GeneralConfiguration  {
     @Bean
     public MyBeanWhitProperties function(){
         return new MyBeanWhitPropertiesImplementation(name, apellido);
+
     }
+
+    @Bean
+    public DataSource dataSource(){
+        DataSourceBuilder dsb = DataSourceBuilder.create();
+        dsb.driverClassName("org.h2.Driver");
+        dsb.url("jdbc:h2:mem:dbJPA");
+        dsb.username("javajpa");
+        dsb.username("");
+
+        return dsb.build();
+
+    }
+
 }
