@@ -7,6 +7,7 @@ import com.hagakure.fundamentos.component.ComponentDependecy;
 import com.hagakure.fundamentos.entity.User;
 import com.hagakure.fundamentos.pojo.UserPojo;
 import com.hagakure.fundamentos.repository.UserRepository;
+import com.hagakure.fundamentos.service.UserService;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,13 +31,16 @@ public class FundamentosApplication implements CommandLineRunner {
 	private MyBeanWhitProperties myBeanWhitProperties;
 	private UserPojo userPojo;
 	private UserRepository repository; //Injección del repositorio.
-	public FundamentosApplication(@Qualifier("componentTwoImplement") ComponentDependecy componentDependecy, MyBean bean, MyBeanWithDependency beanWhitDependency, MyBeanWhitProperties beanProperties, UserPojo pojo, UserRepository userRepository){
+
+	private UserService userService;
+	public FundamentosApplication(@Qualifier("componentTwoImplement") ComponentDependecy componentDependecy, MyBean bean, MyBeanWithDependency beanWhitDependency, MyBeanWhitProperties beanProperties, UserPojo pojo, UserRepository userRepository, UserService service){
 		this.componentDependecy = componentDependecy;
 		this.myBean = bean;
 		this.myBeanWithDependencyImplement = beanWhitDependency;
 		this.myBeanWhitProperties = beanProperties;
 		this.userPojo = pojo;
 		this.repository = userRepository;
+		this.userService = service;
 	}
 	public static void main(String[] args) {
 		SpringApplication.run(FundamentosApplication.class, args);
@@ -47,6 +51,7 @@ public class FundamentosApplication implements CommandLineRunner {
 		//examplesOld();
 		saveUsersInDataBase();
 		getInformationJPQLFromUser();
+		saveWhitErrorTransactional();
 	}
 
 	private void examplesOld(){
@@ -115,5 +120,21 @@ public class FundamentosApplication implements CommandLineRunner {
 
 
 		LOGGER.info("---> END getInformationJPQLFromUser");
+	}
+
+
+	private	void saveWhitErrorTransactional(){
+		User test1 = new User("TestTransactional1", "TestTransactional1@domain.com", LocalDate.now());
+		User test2 = new User("TestTransactional2", "TestTransactional2@domain.com", LocalDate.now());
+		User test3 = new User("TestTransactional3", "TestTransactional3@domain.com", LocalDate.now());
+		User test4 = new User("TestTransactional4", "TestTransactional4@domain.com", LocalDate.now());
+
+		List<User> users = Arrays.asList(test1,test2, test3, test4);
+
+		//Registrar a los usuarios con el metodo transactional
+		userService.saveTransactional(users);
+
+		userService.getAllUsers().stream().forEach(user -> LOGGER.info("\n --> saveWhitErrorTransactional - Usuario en el metodo transacciona : " + user)); //Recuperar todos los usuarios.
+
 	}
 }
