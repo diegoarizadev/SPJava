@@ -69,7 +69,7 @@ public class FundamentosApplication implements CommandLineRunner {
 		User user6 = new User("Carlos", "carlos@gmail.com", LocalDate.of(2022, 4, 7));
 		User user7 = new User("Enrique", "enrique@gmail.com", LocalDate.of(2022, 5, 12));
 		User user8 = new User("Luis", "luis@gmail.com", LocalDate.of(2022, 6, 27));
-		User user9 = new User("Paola", "paola@gmail.com",LocalDate.of(2022, 7, 31));
+		User user9 = new User("Karen", "KarenPaola@gmail.com",LocalDate.of(2022, 7, 31));
 
 		List<User> list = Arrays.asList(a1,b2, c3,user3,user4,user5,user6,user7,user8,user9);
 		//Implementación del repositorio para persistir.
@@ -89,9 +89,15 @@ public class FundamentosApplication implements CommandLineRunner {
 
 		repository.findAndSort("Gw3", Sort.by("id").descending()).stream().forEach(user -> LOGGER.info("----> USUARIO : " + user));
 
+
+		//Implementación QueryMethods
+		repository.findByname("Karen").stream().forEach(user -> LOGGER.info(" ---> QUERY METHODS findByname : "+ user));
+
+
+		LOGGER.info("QUERY METHODS - findByEmailAndName : "+ repository.findByEmailAndName("marisol@gmail.com", "Marisol").orElseThrow(()-> new RuntimeException(" -->> Error findByEmailAndName : Usuario no encontrado")));
+
+
+
 		LOGGER.info("---> END getInformationJPQLFromUser");
-
-
-
 	}
 }
