@@ -82,7 +82,7 @@ public class FundamentosApplication implements CommandLineRunner {
 		LOGGER.info("---> getInformationJPQLFromUser Usuario Existente");
 		LOGGER.info("Select USER --> "+repository.findByUserEmail("ryz3n@gmail.com").orElseThrow(()-> new RuntimeException("Error : Usuario no encontrado")));
 		LOGGER.info("---> getInformationJPQLFromUser El Usuario NO Existente");
-		LOGGER.info("Select USER --> "+repository.findByUserEmail("ryz3n@gmail.com").orElseThrow(()-> new RuntimeException(" -->> Error : Usuario no encontrado")));
+		LOGGER.info("Select USER --> "+repository.findByUserEmail("Gw3n@gmail.com").orElseThrow(()-> new RuntimeException(" -->> Error : Usuario no encontrado")));
 		LOGGER.info("---> getInformationJPQLFromUser ORDENAMIENTO");
 
 		LOGGER.info("Select USER --> ");
