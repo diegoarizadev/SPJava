@@ -1,5 +1,6 @@
 package com.hagakure.fundamentos.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import net.bytebuddy.asm.Advice;
 
 import javax.persistence.*;
@@ -25,6 +26,7 @@ public class Post {
 
     //Creacion de una relacion
     @ManyToOne //Muchos a uno
+    @JsonBackReference
     private User user;
     public Long getId() {
         return id;

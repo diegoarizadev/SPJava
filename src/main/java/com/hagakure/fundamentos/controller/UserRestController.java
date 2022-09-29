@@ -1,11 +1,13 @@
 package com.hagakure.fundamentos.controller;
 
+import com.hagakure.fundamentos.caseuse.CreateUser;
+import com.hagakure.fundamentos.caseuse.DeleteUser;
 import com.hagakure.fundamentos.caseuse.GetUser;
+import com.hagakure.fundamentos.caseuse.UpdateUser;
 import com.hagakure.fundamentos.entity.User;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,20 +17,38 @@ public class UserRestController {
 
 
     private GetUser getUser; //Injección de dependencia del caso de uso
+    private CreateUser createUser;
+    private DeleteUser deleteUser;
+    private UpdateUser updateUser;
 
-    public UserRestController(GetUser getUser) {
+    public UserRestController(GetUser getUser, CreateUser newUser, DeleteUser deleteUser, UpdateUser updateUser) {
         this.getUser = getUser;
+        this.createUser = newUser;
+        this.deleteUser = deleteUser;
+        this.updateUser = updateUser;
     }
 
     //Creación con la capa de servicios.
-    //Crear
-    //Obtener
-    @GetMapping//("/") //entre parentesis se puede agregar la ruta de consumo
+    //Obtener GET
+    @GetMapping("/") //entre parentesis se puede agregar la ruta de consumo
     @ResponseBody
     List<User> get(){
         return getUser.getAll();
     }
-    //Eliminar
-    //Actualizar
-
+    //Crear POST
+    @PostMapping("/")
+    ResponseEntity<User> newUser(@RequestBody User newUser){//@ResponseBody Cuerpo de entrada o request
+        return new ResponseEntity<>(createUser.save(newUser), HttpStatus.CREATED);
+    }
+    //Eliminar DELETE
+    @DeleteMapping("/{id}")
+    ResponseEntity deleteUser(@PathVariable Long id){
+        deleteUser.remove(id);
+        return new ResponseEntity(HttpStatus.NO_CONTENT); //Responde un 204
+    }
+    //Actualizar PUT
+    @PutMapping("/{id}")
+    ResponseEntity replaceUser(@RequestBody User newUser, @PathVariable Long id){
+        return new ResponseEntity<>(updateUser.update(newUser, id), HttpStatus.OK);
+    }
 }
