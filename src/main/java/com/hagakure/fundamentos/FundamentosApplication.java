@@ -110,6 +110,10 @@ public class FundamentosApplication implements CommandLineRunner {
 		repository.findByNameLikeOrderByIdDesc("%Ariza%").stream().forEach(user -> LOGGER.info(" ----> USUARIO : findByNAmeLikeOrderByIdDesc : " + user));
 
 
+		LOGGER.info("El usuario  getAllByBirthDateAndEmail : " + repository.getAllByBirthDateAndEmail(LocalDate.of(2022, 1, 8), "daniela@gmail.com").orElseThrow(()-> new RuntimeException(" -->> Error getAllByBirthDateAndEmail : Usuario no encontrado")));
+
+
+
 		LOGGER.info("---> END getInformationJPQLFromUser");
 	}
 }
