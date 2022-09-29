@@ -18,7 +18,7 @@ public class User {
     @Column(length = 50)
     private String name;
 
-    @Column(length = 50)
+    @Column(length = 50, unique = true) //Atributo unique para identificar el dato como unico en la base de datos.
     private String email;
 
     private LocalDate birthDate;
